@@ -1,3 +1,4 @@
+## https://www.acmicpc.net/problem/2217
 k = int(input())
 ropes = []
 for _ in range(k):
