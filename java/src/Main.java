@@ -1,36 +1,37 @@
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
 
 public class Main {
     public static void main(String[] args) throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        char[] s1 = br.readLine().toCharArray();
+        char[] s2 = br.readLine().toCharArray();
 
-        Map<String, String> m = Map.of(
-                "000", "0",
-                "001", "1",
-                "010", "2",
-                "011", "3",
-                "100", "4",
-                "101", "5",
-                "110", "6",
-                "111", "7");
-
-        String num = br.readLine();
-        if(num.length() % 3 == 1){
-            num = "00" + num;
-        } else if (num.length() % 3 == 2) {
-            num = "0" + num;
+        Map<Character, Integer> s1Count = new HashMap<>();
+        for (char c : s1) {
+            s1Count.put(c, s1Count.getOrDefault(c, 0) + 1);
         }
 
-        List<String> l = new ArrayList<>();
-        for(int i=0; i<num.length(); i+= 3){
-            String s = num.substring(i, i + 3);
-            l.add(m.get(s));
+        Map<Character, Integer> s2Count = new HashMap<>();
+        for(char c: s2){
+            s2Count.put(c, s2Count.getOrDefault(c, 0) + 1);
         }
 
-        System.out.print(String.join("", l));
+        char[] alphabets = "abcdefghijklmnopqrstuvwxyz".toCharArray();
+        int count = 0;
+        for(char c: alphabets){
+
+            if(s1Count.containsKey(c) && s2Count.containsKey(c)){
+                count += Math.abs(s1Count.get(c) - s2Count.get(c));
+            } else if(s1Count.containsKey(c) && !s2Count.containsKey(c)){
+                count += s1Count.get(c);
+            } else if(!s1Count.containsKey(c) && s2Count.containsKey(c) ){
+                count += s2Count.get(c);
+            }
+        }
+
+        System.out.print(count);
 
 
     }
