@@ -1,3 +1,4 @@
+# https://www.acmicpc.net/problem/2608
 first = input()
 second = input()
 
