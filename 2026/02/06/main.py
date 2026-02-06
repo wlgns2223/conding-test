@@ -16,28 +16,30 @@ def convert_to_char(num):
     else:
         return chr(num + ord('a') - 26)
 
+answer = []
 for _ in range(n):
     a,_,b = input().split(" ")
     a,b = convert_to_num(a),convert_to_num(b)
     graph[a][b] = 1
-
-answer = []
-for a in range(ALPHA_NUM):
-    for b in range(ALPHA_NUM):
-        if graph[a][b]:
-            answer.append((a,b))
+    answer.append((a,b))
 
 for k in range(ALPHA_NUM):
     for a in range(ALPHA_NUM):
         for b in range(ALPHA_NUM):
-            if graph[a][k] and graph[k][b]:
+            if graph[a][k] and graph[k][b] and not graph[a][b]:
                 graph[a][b] = 1
                 answer.append((a,b))
 
+num = 0
+answer = set(answer)
+for a,b in answer:
+    if a == b:
+        continue
+    num += 1
 
-answer = sorted(answer)
+answer = sorted(list(answer))
 
-print(len(set(answer)))
+print(num)
 for a,b in answer:
     if a == b:
         continue
